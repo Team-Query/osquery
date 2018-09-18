@@ -82,7 +82,7 @@ DECLARE_string(database_path);
 } // namespace osquery
 
 static char zHelp[] =
-    "Welcome to the osquery shell. Please explore your OS!\n"
+    "Welcome to the osquery shell. Team Query was Here! Please explore your OS!\n"
     "You are connected to a transient 'in-memory' virtual database.\n"
     "\n"
     ".all [TABLE]     Select all from a table\n"
@@ -122,7 +122,12 @@ static char zTimerHelp[] =
 #define MODE_Pretty 5 // Pretty print the SQL results
 
 static const char* modeDescr[] = {
-    "line", "column", "list", "semi", "csv", "pretty",
+    "line",
+    "column",
+    "list",
+    "semi",
+    "csv",
+    "pretty",
 };
 
 // ctype macros that work with signed characters
@@ -1065,7 +1070,7 @@ static int booleanValue(char* zArg) {
     fprintf(
         stderr, "ERROR: Not a boolean value: \"%s\". Assuming \"no\".\n", zArg);
   }
-  return expected.getOr(false) ? 1 : 0;
+  return expected.takeOr(false) ? 1 : 0;
 }
 
 inline void meta_tables(int nArg, char** azArg) {
