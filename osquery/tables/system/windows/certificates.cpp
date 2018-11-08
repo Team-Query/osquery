@@ -204,6 +204,16 @@ void enumerateCertStore(const HCERTSTORE& certStore,
                     certContext->pCertInfo->SerialNumber.pbData +
                         certContext->pCertInfo->SerialNumber.cbData),
         back_inserter(serial));
+    
+//serial number was in wrong endian, so reversed the string and then swapped 
+//every other number to make each byte in the correct order
+    std::reverse(serial.begin(), serial.end());
+    char temp;
+    for(int i=0; i < serial.length(); i += 2) {
+	temp = serial[i];
+	serial[i] = serial[i + 1];
+	serial[i + 1] = temp;
+    }
     r["serial"] = serial;
 
     std::string authKeyId;
