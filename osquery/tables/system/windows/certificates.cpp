@@ -186,7 +186,8 @@ void enumerateCertStore(const HCERTSTORE& certStore,
 
     r["key_usage"] = getKeyUsage(certContext->pCertInfo);
 
-    r["key_strength"] = INTEGER(certContext->cbCertEncoded);
+	int byteToBitModifier = 8;
+    r["key_strength"] = INTEGER((certContext->pCertInfo->SubjectPublicKeyInfo.PublicKey.cbData) * byteToBitModifier);
 
     certBuff.clear();
     getCertCtxProp(certContext, CERT_KEY_IDENTIFIER_PROP_ID, certBuff);
